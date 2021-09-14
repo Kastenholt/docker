@@ -5,14 +5,14 @@ COPY yarn.lock ./
 RUN yarn install --frozen-lockfile
 COPY . .
 RUN yarn build
-#EXPOSE 3000
+EXPOSE $PORT
 #CMD ["npm", "start"]
 
 #FROM nginx:1.19-alpine AS server
 #COPY --from=builder ./app/build /usr/share/nginx/html
 
 FROM nginx:1.19-alpine AS server
-COPY default.conf /etc/nginx/conf.d/default.conf.template
+COPY default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder ./app/build /usr/share/nginx/html
-#CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
-CMD /bin/bash -c “envsubst ‘\$PORT’ < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf” && nginx -g ‘daemon off;’
+CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
+#CMD /bin/bash -c “envsubst ‘\$PORT’ < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf” && nginx -g ‘daemon off;’
