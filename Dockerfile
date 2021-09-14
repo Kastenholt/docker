@@ -12,7 +12,7 @@ RUN yarn build
 #COPY --from=builder ./app/build /usr/share/nginx/html
 
 FROM nginx:1.19-alpine AS server
-COPY ./etc/nginx.conf /etc/nginx/conf.d/default.conf
+COPY default.conf /etc/nginx/conf.d/default.conf.template
 COPY --from=builder ./app/build /usr/share/nginx/html
-CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
-
+#CMD sed -i -e 's/$PORT/'"$PORT"'/g' /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'
+CMD /bin/bash -c “envsubst ‘\$PORT’ < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf” && nginx -g ‘daemon off;’
