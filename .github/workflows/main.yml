@@ -16,18 +16,19 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
-  deploy:
-    # The type of runner that the job will run on
+  build:
+    name: Build
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: log into VPS and trigger deploy script
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }} # uses secrets stored in the Secrets tab
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
+    - uses: actions/checkout@master
+    - name: copy file via ssh password
+      uses: appleboy/scp-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        source: "*"
+        target: "/mckkastenholt"
    
         
