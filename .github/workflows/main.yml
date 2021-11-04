@@ -29,6 +29,6 @@ jobs:
         password: ${{ secrets.SSH_KEY }}
         port: ${{ secrets.SSH_PORT }}
         source: "*"
-        target: "/mckkastenholt"
+        target: "mckkastenholt"
    
         
