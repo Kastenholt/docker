@@ -61,15 +61,4 @@ jobs:
       - name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
 
-      - name: Deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_KEY }}
-          script: |
-            docker kill $(docker ps -q)
-            docker system prune -a
-            docker pull kastenholt/react_nginx:latest
-            docker run -p 8002:80 kastenholt/react_nginx:latest
 
