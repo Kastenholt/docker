@@ -26,6 +26,15 @@ function App() {
         >
           Learn Docker
         </a>
+
+        <a
+            className="App-link"
+            href="https://github.com/features/actions/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+          Learn Actions
+        </a>
       </header>
     </div>
   );
