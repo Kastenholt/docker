@@ -2,6 +2,7 @@
   "name": "docker-app",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://173.82.227.13/mckkastenholt",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
